@@ -1,4 +1,4 @@
-# SceneOn Signup Wizard
+# SCENE_ON
 
 Frontend-only recreation of the SceneOn onboarding experience — landing, terms, a 4-step signup wizard, and a success state. Visual language: black canvas, violet atmosphere, white pill CTAs, Poppins.
 

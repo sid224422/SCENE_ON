@@ -597,7 +597,7 @@ fieldset {
 .legal-page {
   max-width: 44rem;
   margin: 0 auto;
-  padding: 6.25rem 1.25rem 16rem;
+  padding: 6.25rem 1.25rem 4rem;
 }
 
 .legal-intro {
@@ -678,14 +678,21 @@ fieldset {
   list-style: none;
 }
 
+.legal-signup {
+  margin-top: 2.75rem;
+}
+
+.legal-signup h2 {
+  margin: 0.35rem 0 1rem;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
 .consent-bar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 40;
-  padding: 1rem 1.25rem calc(1rem + var(--safe-b));
-  background: linear-gradient(to top, #050506 72%, transparent);
+  position: static;
+  padding: 0;
+  background: none;
 }
 
 .consent-card {

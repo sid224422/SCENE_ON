@@ -114,10 +114,11 @@ export function TermsPage() {
             ))}
           </ul>
         </section>
-      </article>
 
-      <div className="consent-bar">
-        <div className="consent-card">
+        <section className="legal-signup" id="signup">
+          <p className="hero-kicker">Sign up</p>
+          <h2>Create your profile</h2>
+          <div className="consent-card">
           <div className="check-row">
             <input
               id="agree"
@@ -143,7 +144,8 @@ export function TermsPage() {
             </Button>
           </MagneticButton>
         </div>
-      </div>
+        </section>
+      </article>
     </div>
   )
 }

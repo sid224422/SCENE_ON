@@ -1,19 +1,14 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
-import { Button } from '../components/Button'
-import { TextField } from '../components/Field'
 import { Logo } from '../components/Logo'
 import { PulseGrid } from '../components/motion/PulseGrid'
 import { SplitText } from '../components/motion/SplitText'
 import { TiltCard } from '../components/motion/TiltCard'
 import { VantaNet } from '../components/motion/VantaNet'
-import { useToast } from '../components/Toast'
 import { useLandingGsap } from '../hooks/useLandingGsap'
 import { BENTO, EVENTS, HERO_SHOT } from '../lib/media'
-import { validateEmail } from '../lib/validation'
-import { getErrorMessage, useSignup } from '../state/SignupContext'
 
 const hoverSpring = { type: 'spring' as const, stiffness: 320, damping: 18 }
 
@@ -46,7 +41,6 @@ export function LandingPage() {
       <LandingHeader />
 
       <Hero />
-      <SignupSection />
       <EventRail />
       <AboutZoom />
       <BentoNights />
@@ -116,17 +110,9 @@ function LandingHeader() {
           Rooms
         </a>
       </nav>
-      <a
-        href="#signup"
-        className="btn btn-primary btn-nav"
-        onClick={(event) => {
-          event.preventDefault()
-          lenis?.scrollTo('#signup', { offset: -72 }) ??
-            document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }}
-      >
-        Sign up
-      </a>
+      <Link to="/terms" className="btn btn-primary btn-nav">
+        Join the night
+      </Link>
     </header>
   )
 }
@@ -233,16 +219,9 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.18, duration: 0.65, ease: [0.87, 0, 0.13, 1] }}
         >
-          <a
-            href="#signup"
-            className="btn btn-primary"
-            onClick={(event) => {
-              event.preventDefault()
-              document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            }}
-          >
-            Sign up
-          </a>
+          <Link to="/terms" className="btn btn-primary">
+            Create your profile
+          </Link>
           <a href="#nights" className="btn btn-outline">
             See what’s on
           </a>
@@ -365,102 +344,6 @@ function ThemeMarquee() {
   )
 }
 
-function scrollToSignup() {
-  document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
-function SignupSection() {
-  const { acceptTerms, sendOtp } = useSignup()
-  const { push } = useToast()
-  const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [agreed, setAgreed] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-
-  async function submit() {
-    const emailError = validateEmail(email)
-    if (emailError) {
-      setError(emailError)
-      return
-    }
-    if (!agreed) {
-      setError('Please confirm you are 18 or older to sign up.')
-      return
-    }
-    setLoading(true)
-    setError(null)
-    try {
-      acceptTerms()
-      await sendOtp(email.trim())
-      push('Enter any 6-digit code to continue.', 'success')
-      navigate('/signup/verify')
-    } catch (err) {
-      const message = getErrorMessage(err, 'Something went wrong. Please try again.')
-      setError(message)
-      push(message, 'error')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return (
-    <section id="signup" className="signup-band">
-      <p className="hero-kicker">Sign up</p>
-      <h2>Create your profile</h2>
-      <p>Email, a 6-digit code, who you are, and your city.</p>
-      <form
-        className="signup-form"
-        noValidate
-        onSubmit={(event) => {
-          event.preventDefault()
-          void submit()
-        }}
-      >
-        <TextField
-          id="signup-email"
-          label="Email"
-          type="email"
-          autoComplete="email"
-          inputMode="email"
-          autoCapitalize="none"
-          autoCorrect="off"
-          spellCheck={false}
-          placeholder="you@email.com"
-          value={email}
-          error={error?.includes('18') ? null : error}
-          onChange={(event) => {
-            setEmail(event.target.value)
-            if (error) setError(null)
-          }}
-        />
-        <div className="check-row">
-          <input
-            id="signup-agree"
-            type="checkbox"
-            checked={agreed}
-            onChange={(event) => {
-              setAgreed(event.target.checked)
-              if (event.target.checked && error?.includes('18')) setError(null)
-            }}
-          />
-          <label htmlFor="signup-agree">
-            I am 18 or older and I agree to the <Link to="/terms">Terms</Link>.
-          </label>
-        </div>
-        {error?.includes('18') && (
-          <p className="field-error" role="alert">
-            {error}
-          </p>
-        )}
-        <Button type="submit" loading={loading}>
-          Sign up
-        </Button>
-      </form>
-    </section>
-  )
-}
-
 function CtaBand() {
   return (
     <section className="cta-band cta-plain">
@@ -468,12 +351,9 @@ function CtaBand() {
       <SplitText text="Your city is already waiting." as="h2" delay={0.05} />
       <p>Four quick steps. Then you’re in the room.</p>
       <div>
-        <a href="#signup" className="btn btn-primary" onClick={(event) => {
-          event.preventDefault()
-          scrollToSignup()
-        }}>
-          Sign up
-        </a>
+        <Link to="/terms" className="btn btn-primary">
+          Get started
+        </Link>
       </div>
     </section>
   )

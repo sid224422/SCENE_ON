@@ -108,18 +108,6 @@ export function useLandingGsap(scope: RefObject<HTMLElement | null>) {
         scrollTrigger: { trigger: '.theme-scene', start: 'top 80%' },
       })
 
-      gsap.fromTo(
-        '.cta-plain',
-        { clipPath: 'inset(0 100% 0 0 round 28px)', opacity: 0 },
-        {
-          clipPath: 'inset(0 0% 0 0 round 28px)',
-          opacity: 1,
-          duration: 0.9,
-          ease: 'power3.inOut',
-          scrollTrigger: { trigger: '.cta-plain', start: 'top 85%' },
-        },
-      )
-
       ScrollTrigger.refresh()
     },
     { scope },

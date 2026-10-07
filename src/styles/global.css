@@ -597,7 +597,7 @@ fieldset {
 .legal-page {
   max-width: 44rem;
   margin: 0 auto;
-  padding: 6.25rem 1.25rem 9rem;
+  padding: 6.25rem 1.25rem 16rem;
 }
 
 .legal-intro {
@@ -679,11 +679,13 @@ fieldset {
 }
 
 .consent-bar {
-  position: sticky;
+  position: fixed;
+  left: 0;
+  right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 40;
   padding: 1rem 1.25rem calc(1rem + var(--safe-b));
-  background: linear-gradient(to top, #050506 62%, transparent);
+  background: linear-gradient(to top, #050506 72%, transparent);
 }
 
 .consent-card {

@@ -168,7 +168,7 @@ function EmailStep() {
     setGlobalError(null)
     try {
       await sendOtp(email.trim())
-      push('Code sent. Check your inbox.', 'success')
+      push('Enter any 6-digit code to continue.', 'success')
       navigate('/signup/verify')
     } catch (err) {
       const message = getErrorMessage(err, 'Something went wrong. Please try again.')
@@ -285,7 +285,7 @@ function OtpStep() {
       await sendOtp()
       setOtp('')
       setSeconds(45)
-      push('A new code is on the way.', 'success')
+      push('Enter a new 6-digit code to continue.', 'success')
     } catch (err) {
       setError(getErrorMessage(err, 'Could not resend the code. Please try again.'))
     } finally {
@@ -317,7 +317,7 @@ function OtpStep() {
           {error ?? ''}
         </p>
         <div className="alert alert-info">
-          Demo code: <strong>{DEMO_OTP}</strong>. Use 000000 to preview an expired code.
+          Enter any 6 digits, such as <strong>{DEMO_OTP}</strong>. Use 000000 to preview an expired code.
         </div>
         <p className="hint">
           {seconds > 0 ? (

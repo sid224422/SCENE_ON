@@ -30,7 +30,7 @@ npm run preview
 
 ## Demo behaviour
 
-- Correct OTP: `424242`
+- Any 6-digit code continues. Example: `424242`
 - Expired OTP: `000000`
 - Forced network failure: email containing `+fail` (example `ada+fail@sceneon.app`)
 - Slow network: email containing `+slow`

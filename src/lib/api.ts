@@ -23,7 +23,7 @@ function shouldFail(email: string) {
 
 export async function requestOtp(email: string): Promise<{ expiresInSec: number }> {
   await wait(resolveDelay(email))
-  if (shouldFail(email) || !navigator.onLine) {
+  if (shouldFail(email)) {
     throw new ApiError(
       'NETWORK',
       'Unable to send a verification code. Please try again.',
@@ -38,7 +38,7 @@ export async function resendOtp(email: string): Promise<{ expiresInSec: number }
 
 export async function verifyOtp(email: string, otp: string): Promise<void> {
   await wait(resolveDelay(email))
-  if (shouldFail(email) || !navigator.onLine) {
+  if (shouldFail(email)) {
     throw new ApiError('NETWORK', 'Verification failed. Please try again.')
   }
   if (otp === '000000') {
@@ -47,7 +47,7 @@ export async function verifyOtp(email: string, otp: string): Promise<void> {
       'This code has expired. Request a new one to continue.',
     )
   }
-  if (otp !== '424242') {
+  if (!/^\d{6}$/.test(otp)) {
     throw new ApiError(
       'INVALID',
       'That code doesn’t match. Check the 6 digits and try again.',
@@ -57,18 +57,9 @@ export async function verifyOtp(email: string, otp: string): Promise<void> {
 
 export async function submitProfile(): Promise<void> {
   await wait(typicalLatency())
-  if (!navigator.onLine) {
-    throw new ApiError('NETWORK', 'Unable to save your profile. Please try again.')
-  }
 }
 
 export async function completeSignup(): Promise<{ userId: string }> {
   await wait(900 + Math.random() * 500)
-  if (!navigator.onLine) {
-    throw new ApiError(
-      'NETWORK',
-      'Unable to complete signup. Please try again.',
-    )
-  }
   return { userId: `ex_${crypto.randomUUID().slice(0, 8)}` }
 }
